@@ -61,3 +61,19 @@ app.patch('/api/users/:id', (req, res) => {
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+// Skapa ett memory-baserat produkt-API. Lägg in en hårdkodad array med produkter.
+const products = [
+  { id: 1, name: 'Penna', price: 10 },
+  { id: 2, name: 'Blyertspenna', price: 5 },
+];
+
+app.get('/api/products', (req, res) => {
+  res.json(products);
+});
+
+app.get('/api/products/:id', (req, res) => {
+  const id = Number(req.params.id);
+
+  res.json(products[id - 1]);
+});
