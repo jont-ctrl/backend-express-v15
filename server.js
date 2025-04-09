@@ -26,6 +26,13 @@ app.get('/api/greet/:name', (req, res) => {
   res.json({ message: `Greetings ${name}` });
 });
 
+// Använd req.query för att hämta ett namn via ?name=Mandus
+app.get('/api/greet', (req, res) => {
+  const name = req.query.name;
+
+  res.json({ message: `Hejsan, ${name}` });
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
