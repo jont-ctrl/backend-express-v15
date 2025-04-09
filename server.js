@@ -3,6 +3,9 @@ import express from 'express';
 const app = express();
 const port = 3000;
 
+// Middleware för att kunna läsa JSON i request body
+app.use(express.json());
+
 // Returnera en hälsning med res.header():
 app.get('/api/welcome', (req, res) => {
   res.header('Welcome-message', 'Welcome to our api');
@@ -31,6 +34,28 @@ app.get('/api/greet', (req, res) => {
   const name = req.query.name;
 
   res.json({ message: `Hejsan, ${name}` });
+});
+
+// Uppdatera endast namn på en användare
+let users = [
+  { id: 1, name: 'Anna' },
+  { id: 2, name: 'Erik' },
+  { id: 3, name: 'Maria' },
+];
+
+app.patch('/api/users/:id', (req, res) => {
+  const userID = parseInt(req.params.id);
+
+  const result = users.find((user) => user.id === userID);
+  console.log(result);
+  console.log(users);
+
+  // Updatera namn med body request name:
+  result.name = req.body.name;
+
+  console.log(result);
+  console.log(users);
+  res.send(result);
 });
 
 app.listen(port, () => {
